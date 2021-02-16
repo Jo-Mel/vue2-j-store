@@ -50,7 +50,13 @@ export default new Vuex.Store({
       if (inCart) {
         const index = state.cartContent.indexOf(inCart);
         inCart.quantity = payload.quantity;
-        state.cartContent.splice(index, 1, inCart);
+        if (inCart.quantity <= 0) {
+          state.cartContent = state.cartContent.filter(
+            (item) => item.id !== inCart.id
+          );
+        } else {
+          state.cartContent.splice(index, 1, inCart);
+        }
       }
     },
   },
